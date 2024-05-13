@@ -79,55 +79,78 @@ const CountryForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 justify-center items-center">
-      <h3>Add a New Country</h3>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Country Name"
-          required
-        />
-        <input
-          type="text"
-          name="emoji"
-          value={formData.emoji}
-          onChange={handleChange}
-          placeholder="Emoji"
-          required
-        />
-        <input
-          type="text"
-          name="code"
-          value={formData.code}
-          onChange={handleChange}
-          placeholder="Country Code"
-          required
-        />
-        <select
-          name="continent"
-          value={formData.continent}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Continent</option>
-          {continentsLoading ? (
-            <option disabled>Loading...</option>
-          ) : (
-            continentsData &&
-            continentsData.continents.map(
-              (continent: { id: string; name: string }) => (
-                <option key={continent.id} value={continent.name}>
-                  {continent.name}
-                </option>
+    <div className="my-8 mx-16 bg-gray-200 border border-gray-300 rounded-md">
+      <form
+        onSubmit={handleSubmit}
+        className="flex md:flex-col lg:flex-row justify-between p-6"
+      >
+        <div className="flex flex-col">
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="border border-gray-400 rounded-md p-1 h-9 lg:w-36"
+            required
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="emoji">Emoji</label>
+          <input
+            type="text"
+            id="emoji"
+            name="emoji"
+            value={formData.emoji}
+            onChange={handleChange}
+            className="border border-gray-400 rounded-md p-1 h-9 lg:w-36"
+            required
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="code">Country Code</label>
+          <input
+            type="text"
+            id="code"
+            name="code"
+            value={formData.code}
+            onChange={handleChange}
+            className="border border-gray-400 rounded-md p-1 h-9 lg:w-36"
+            required
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="continent">Continent</label>
+          <select
+            id="continent"
+            name="continent"
+            className="border border-gray-400 rounded-md p-1 h-9 lg:w-40"
+            value={formData.continent}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Continent</option>
+            {continentsLoading ? (
+              <option disabled>Loading...</option>
+            ) : (
+              continentsData &&
+              continentsData.continents.map(
+                (continent: { id: string; name: string }) => (
+                  <option key={continent.id} value={continent.name}>
+                    {continent.name}
+                  </option>
+                )
               )
-            )
-          )}
-        </select>
-        <button type="submit" disabled={mutationLoading}>
-          {mutationLoading ? "Adding..." : "Add Country"}
+            )}
+          </select>
+        </div>
+        <button
+          className="bg-primary_color text-white p-3 my-2 rounded-md"
+          type="submit"
+          disabled={mutationLoading}
+        >
+          {mutationLoading ? "Adding..." : "Add"}
         </button>
         {mutationError && <p>Error: {mutationError.message}</p>}
       </form>

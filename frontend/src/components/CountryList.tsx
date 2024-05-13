@@ -34,7 +34,7 @@ export const CountryList = () => {
         <div className="flex flex-wrap justify-center gap-4 p-4">
           {data.countries.map(({ id, code, name, emoji }) => (
             <Link href={`/countries/${code}`} key={code}>
-              <div className="max-w-xs rounded overflow-hidden border border-grey-500 hover:border-primary_color cursor-pointer shadow-lg text-center w-36">
+              <div className="max-w-xs rounded overflow-hidden border border-grey-400 hover:border-primary_color cursor-pointer text-center w-36">
                 <div className="px-6 py-4">
                   <div className="font-bold text-xl mb-2">{name}</div>
                   <p className="text-xl">{emoji}</p>
