@@ -33,7 +33,7 @@ function Country() {
     variables: { code: code as string },
   });
 
-  if (loading) return Loader;
+  if (loading) return <Loader />;
   if (!data || !data.country) return <div>No country found</div>;
 
   const { country } = data;
