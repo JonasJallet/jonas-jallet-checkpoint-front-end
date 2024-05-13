@@ -1,8 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
 import { CountriesQuery } from "@/graphql/generated/schema";
+import { gql, useQuery } from "@apollo/client";
 import Link from "next/link";
-import Loader from "@/components/Loader";
-import CreateCountryForm from "@/components/CreateCountryForm";
+import Loader from "./Loader";
 
 const LIST_COUNTRIES = gql`
   query Countries {
@@ -19,7 +18,7 @@ const LIST_COUNTRIES = gql`
   }
 `;
 
-export default function Home() {
+export const CountryList = () => {
   const { data, loading, error } = useQuery<CountriesQuery>(LIST_COUNTRIES);
 
   const loadingOrError = () => {
@@ -30,14 +29,8 @@ export default function Home() {
 
   return (
     <>
-      <CreateCountryForm />
-      <div className="flex flex-col gap-4 justify-center items-center">
-        <h3>Here you can find a list of country that might interest you</h3>
-      </div>
-
-      {!data ? (
-        loadingOrError()
-      ) : (
+      {loadingOrError()}
+      {data && (
         <div className="flex flex-wrap justify-center gap-4 p-4">
           {data.countries.map(({ id, code, name, emoji }) => (
             <Link href={`/countries/${code}`} key={code}>
@@ -53,4 +46,4 @@ export default function Home() {
       )}
     </>
   );
-}
+};
