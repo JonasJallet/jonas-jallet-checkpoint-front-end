@@ -89,10 +89,10 @@ function CountryForm({
   };
 
   return (
-    <div className="my-8 mx-16 bg-gray-200 border border-gray-300 rounded-md">
+    <div className="my-8 mx-16 xl:m-auto xl:my-8 bg-gray-200 border border-gray-300 rounded-md xl:w-8/12 2xl:w-6/12">
       <form
         onSubmit={handleSubmit}
-        className="flex md:flex-col lg:flex-row justify-between p-6"
+        className="flex flex-col lg:flex-row justify-between p-6"
       >
         <div className="flex flex-col">
           <label htmlFor="name">Name</label>
@@ -102,7 +102,7 @@ function CountryForm({
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="border border-gray-400 rounded-md p-1 h-9 lg:w-36"
+            className="border border-gray-400 rounded-md p-1 my-2 h-9 lg:w-36"
             required
           />
         </div>
@@ -114,7 +114,7 @@ function CountryForm({
             name="emoji"
             value={formData.emoji}
             onChange={handleChange}
-            className="border border-gray-400 rounded-md p-1 h-9 lg:w-36"
+            className="border border-gray-400 rounded-md p-1 my-2 h-9 lg:w-36"
             required
           />
         </div>
@@ -126,7 +126,7 @@ function CountryForm({
             name="code"
             value={formData.code}
             onChange={handleChange}
-            className="border border-gray-400 rounded-md p-1 h-9 lg:w-36"
+            className="border border-gray-400 rounded-md p-1 my-2 h-9 lg:w-36"
             required
           />
         </div>
@@ -135,7 +135,7 @@ function CountryForm({
           <select
             id="continent"
             name="continent"
-            className="border border-gray-400 rounded-md p-1 h-9 lg:w-40"
+            className="border border-gray-400 rounded-md p-1 my-2 h-9 lg:w-40"
             value={formData.continent}
             onChange={handleChange}
             required
@@ -156,7 +156,7 @@ function CountryForm({
           </select>
         </div>
         <button
-          className="bg-primary_color text-white p-3 my-2 rounded-md"
+          className="bg-primary_color text-white p-3 my-3 rounded-md"
           type="submit"
           disabled={mutationLoading}
         >
