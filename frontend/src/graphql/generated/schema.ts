@@ -73,6 +73,18 @@ export type QueryCountryArgs = {
   code: Scalars['String'];
 };
 
+export type AddCountryMutationVariables = Exact<{
+  data: NewCountryInput;
+}>;
+
+
+export type AddCountryMutation = { __typename?: 'Mutation', addCountry: { __typename?: 'Country', code: string, emoji: string, id: number, name: string, continent?: { __typename?: 'Continent', id: number, name: string } | null } };
+
+export type ContinentsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ContinentsQuery = { __typename?: 'Query', continents: Array<{ __typename?: 'Continent', id: number, name: string }> };
+
 export type CountryQueryVariables = Exact<{
   code: Scalars['String'];
 }>;
@@ -86,6 +98,81 @@ export type CountriesQueryVariables = Exact<{ [key: string]: never; }>;
 export type CountriesQuery = { __typename?: 'Query', countries: Array<{ __typename?: 'Country', code: string, emoji: string, id: number, name: string, continent?: { __typename?: 'Continent', id: number, name: string } | null }> };
 
 
+export const AddCountryDocument = gql`
+    mutation AddCountry($data: NewCountryInput!) {
+  addCountry(data: $data) {
+    code
+    continent {
+      id
+      name
+    }
+    emoji
+    id
+    name
+  }
+}
+    `;
+export type AddCountryMutationFn = Apollo.MutationFunction<AddCountryMutation, AddCountryMutationVariables>;
+
+/**
+ * __useAddCountryMutation__
+ *
+ * To run a mutation, you first call `useAddCountryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCountryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCountryMutation, { data, loading, error }] = useAddCountryMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useAddCountryMutation(baseOptions?: Apollo.MutationHookOptions<AddCountryMutation, AddCountryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddCountryMutation, AddCountryMutationVariables>(AddCountryDocument, options);
+      }
+export type AddCountryMutationHookResult = ReturnType<typeof useAddCountryMutation>;
+export type AddCountryMutationResult = Apollo.MutationResult<AddCountryMutation>;
+export type AddCountryMutationOptions = Apollo.BaseMutationOptions<AddCountryMutation, AddCountryMutationVariables>;
+export const ContinentsDocument = gql`
+    query Continents {
+  continents {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useContinentsQuery__
+ *
+ * To run a query within a React component, call `useContinentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useContinentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useContinentsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useContinentsQuery(baseOptions?: Apollo.QueryHookOptions<ContinentsQuery, ContinentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ContinentsQuery, ContinentsQueryVariables>(ContinentsDocument, options);
+      }
+export function useContinentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ContinentsQuery, ContinentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ContinentsQuery, ContinentsQueryVariables>(ContinentsDocument, options);
+        }
+export type ContinentsQueryHookResult = ReturnType<typeof useContinentsQuery>;
+export type ContinentsLazyQueryHookResult = ReturnType<typeof useContinentsLazyQuery>;
+export type ContinentsQueryResult = Apollo.QueryResult<ContinentsQuery, ContinentsQueryVariables>;
 export const CountryDocument = gql`
     query Country($code: String!) {
   country(code: $code) {
