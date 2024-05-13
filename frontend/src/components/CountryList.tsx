@@ -1,4 +1,5 @@
-import { CountriesQuery } from "@/graphql/generated/schema";
+import { useEffect, useState } from "react"; // Import useState hook
+import { CountriesQuery, Country } from "@/graphql/generated/schema";
 import { gql, useQuery } from "@apollo/client";
 import Link from "next/link";
 import Loader from "./Loader";
@@ -18,7 +19,7 @@ const LIST_COUNTRIES = gql`
   }
 `;
 
-export const CountryList = () => {
+export const CountryList = ({ newCountry }: Country | null) => {
   const { data, loading, error } = useQuery<CountriesQuery>(LIST_COUNTRIES);
 
   const loadingOrError = () => {
@@ -27,12 +28,29 @@ export const CountryList = () => {
     }
   };
 
+  // Use state to manage the list of countries
+  const [countries, setCountries] = useState([]);
+
+  // Update the list of countries when data changes
+  useEffect(() => {
+    if (data && data.countries) {
+      setCountries(data.countries);
+    }
+  }, [data]);
+
+  // Add the new country to the list of countries
+  useEffect(() => {
+    if (newCountry) {
+      setCountries((prevCountries) => [...prevCountries, newCountry]);
+    }
+  }, [newCountry]);
+
   return (
     <>
       {loadingOrError()}
-      {data && (
+      {countries.length > 0 && ( // Check if there are countries to display
         <div className="flex flex-wrap justify-center gap-4 p-4">
-          {data.countries.map(({ id, code, name, emoji }) => (
+          {countries.map(({ id, code, name, emoji }) => (
             <Link href={`/countries/${code}`} key={code}>
               <div className="max-w-xs rounded overflow-hidden border border-gray-400 hover:border-primary_color cursor-pointer text-center w-36">
                 <div className="px-6 py-4">

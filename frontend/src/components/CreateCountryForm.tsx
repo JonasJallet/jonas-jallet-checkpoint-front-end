@@ -25,7 +25,8 @@ const CONTINENTS_QUERY = gql`
   }
 `;
 
-const CountryForm = () => {
+const CountryForm = ({ onCountryAdded }) => {
+  // Receive the callback function as prop
   const [formData, setFormData] = useState({
     name: "",
     emoji: "",
@@ -57,7 +58,7 @@ const CountryForm = () => {
         throw new Error("Continent ID not found");
       }
 
-      await addCountry({
+      const { data } = await addCountry({
         variables: {
           data: {
             name: formData.name,
@@ -67,6 +68,11 @@ const CountryForm = () => {
           },
         },
       });
+
+      if (data && data.addCountry) {
+        onCountryAdded(data.addCountry);
+      }
+
       setFormData({
         name: "",
         emoji: "",
