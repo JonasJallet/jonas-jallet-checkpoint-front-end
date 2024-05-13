@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"; // Import useState hook
+import { useEffect, useState } from "react";
 import { CountriesQuery, Country } from "@/graphql/generated/schema";
 import { gql, useQuery } from "@apollo/client";
 import Link from "next/link";
@@ -19,7 +19,7 @@ const LIST_COUNTRIES = gql`
   }
 `;
 
-export const CountryList = ({ newCountry }: Country | null) => {
+export const CountryList = ({ newCountry }: { newCountry: Country | null }) => {
   const { data, loading, error } = useQuery<CountriesQuery>(LIST_COUNTRIES);
 
   const loadingOrError = () => {
@@ -28,17 +28,13 @@ export const CountryList = ({ newCountry }: Country | null) => {
     }
   };
 
-  // Use state to manage the list of countries
-  const [countries, setCountries] = useState([]);
-
-  // Update the list of countries when data changes
+  const [countries, setCountries] = useState<Country[]>([]);
   useEffect(() => {
     if (data && data.countries) {
       setCountries(data.countries);
     }
   }, [data]);
 
-  // Add the new country to the list of countries
   useEffect(() => {
     if (newCountry) {
       setCountries((prevCountries) => [...prevCountries, newCountry]);
@@ -48,7 +44,7 @@ export const CountryList = ({ newCountry }: Country | null) => {
   return (
     <>
       {loadingOrError()}
-      {countries.length > 0 && ( // Check if there are countries to display
+      {countries.length > 0 && (
         <div className="flex flex-wrap justify-center gap-4 p-4">
           {countries.map(({ id, code, name, emoji }) => (
             <Link href={`/countries/${code}`} key={code}>
