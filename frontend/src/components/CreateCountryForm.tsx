@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import { Country } from "@/graphql/generated/schema";
 
 const ADD_COUNTRY = gql`
   mutation AddCountry($data: NewCountryInput!) {
@@ -25,8 +26,11 @@ const CONTINENTS_QUERY = gql`
   }
 `;
 
-const CountryForm = ({ onCountryAdded }) => {
-  // Receive the callback function as prop
+function CountryForm({
+  onCountryAdded,
+}: {
+  onCountryAdded: (country: Country) => void;
+}) {
   const [formData, setFormData] = useState({
     name: "",
     emoji: "",
@@ -162,6 +166,6 @@ const CountryForm = ({ onCountryAdded }) => {
       </form>
     </div>
   );
-};
+}
 
 export default CountryForm;
